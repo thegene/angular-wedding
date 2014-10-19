@@ -9,9 +9,5 @@
  */
 angular.module('angularWeddingApp')
   .controller('MainCtrl', function ($scope) {
-    $scope.awesomeThings = [
-      'HTML5 Boilerplate',
-      'AngularJS',
-      'Karma'
-    ];
+    $scope.pictures = [1001, 1100, 1122]
   });
