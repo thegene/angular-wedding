@@ -17,6 +17,6 @@ describe('Controller: MainCtrl', function () {
   }));
 
   it('has pictures', function () {
-    expect(scope.pictures.length).toBe(3); // just to get something down for now
+    expect(scope.pictureIds.length).toBe(3); // just to get something down for now
   });
 });

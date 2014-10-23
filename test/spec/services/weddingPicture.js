@@ -1,3 +1,0 @@
-describe('Picture service', function(){
-
-});
