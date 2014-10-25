@@ -9,5 +9,5 @@
  */
 angular.module('angularWeddingApp')
   .controller('MainCtrl', function ($scope) {
-    $scope.pictures = [1001, 1100, 1122]
+    $scope.pictureIds = [1001, 1100, 1122];
   });
