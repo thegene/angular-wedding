@@ -1,3 +1,5 @@
+'use strict';
+
 describe('Thumbnail filter', function() {
   beforeEach(module('weddingFilters'));
 
