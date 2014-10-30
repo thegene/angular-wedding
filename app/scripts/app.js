@@ -16,6 +16,7 @@ angular
     'ngRoute',
     'ngSanitize',
     'ngTouch',
+    'ui.bootstrap',
     'weddingFilters',
   ])
   .config(function ($routeProvider) {

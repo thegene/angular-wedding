@@ -1,5 +1,5 @@
 <div class="row">
   <div ng-repeat="id in pictureIds" class="col-lg-4 col-sm-6 col-xs-12">
-    <img ng-src="{{ id | weddingThumbnail }}" />
+    <img ng-src="{{ id | weddingThumbnail }}" ng-click="openModal( {{ id }} )"/>
   </div>
 </div>
