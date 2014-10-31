@@ -8,8 +8,11 @@
  * Controller of the angularWeddingApp
  */
 angular.module('angularWeddingApp')
-  .controller('MainCtrl', function ($scope, $modal) {
-    $scope.pictureIds = [1001, 1100, 1122];
+  .controller('MainCtrl', function ($scope, $modal, $http) {
+
+    $http.get('pictures/pictures.json').success(function(data){
+      $scope.pictures = data['pictures'];
+    });
 
     $scope.openModal = function(pictureId){
 
