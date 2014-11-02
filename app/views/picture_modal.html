@@ -1,3 +1,7 @@
 <div class="picture">
   <img ng-src="{{ thumbnail }}" />
+  <a class="download full glyphicon glyphicon-download"
+     download="{{ fullName }}", ng-href="{{ full }}">Download full size</a>
+  <a class="download thumb glyphicon glyphicon-download"
+     download="{{ thumbName }}", ng-href="{{ thumbnail }}">Download small</a>
 </div>
