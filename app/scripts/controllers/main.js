@@ -14,7 +14,7 @@ angular.module('angularWeddingApp')
       $scope.pictures = data['pictures'];
     });
 
-    $scope.openModal = function(thumbnail){
+    $scope.openModal = function(thumbnail, full){
 
       var modalInstance = $modal.open({
         templateUrl: 'views/picture_modal.html',
@@ -22,7 +22,10 @@ angular.module('angularWeddingApp')
         resolve: {
           thumbnail: function() {
             return thumbnail;
-          }
+          },
+          full: function(){
+            return full;
+          } 
         }
       });
 
