@@ -18,11 +18,28 @@ describe('Controller: PictureModalCtrl', function () {
     Controller = $controller('PictureModalCtrl', {
       $scope: scope,
       $modalInstance: mockModalInstance,
-      thumbnail: 'pictures/thumbs/something.jpg'
+      thumbnail: 'pictures/thumbs/some_thumb.jpg',
+      full: 'pictures/full/some_full_pic.jpg'
     })
   }));
 
-  it('has a thumbnail', function(){
-    expect(scope.thumbnail).toBe('pictures/thumbs/something.jpg');
+  describe('thumbnails', function(){
+    it('has a thumbnail', function(){
+      expect(scope.thumbnail).toBe('pictures/thumbs/some_thumb.jpg');
+    });
+
+    it('has a thumbName', function(){
+      expect(scope.thumbName).toBe('some_thumb.jpg');
+    });
+  });
+
+  describe('full size pictures', function() {
+    it('has a full size picture file', function(){
+      expect(scope.full).toBe('pictures/full/some_full_pic.jpg');
+    });
+
+    it('has a fullName', function(){
+      expect(scope.fullName).toBe('some_full_pic.jpg');
+    });
   });
 });
