@@ -14,14 +14,14 @@ angular.module('angularWeddingApp')
       $scope.pictures = data['pictures'];
     });
 
-    $scope.openModal = function(pictureId){
+    $scope.openModal = function(thumbnail){
 
       var modalInstance = $modal.open({
         templateUrl: 'views/picture_modal.html',
         controller: 'PictureModalCtrl',
         resolve: {
-          pictureId: function() {
-            return pictureId;
+          thumbnail: function() {
+            return thumbnail;
           }
         }
       });

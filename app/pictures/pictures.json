@@ -1,16 +1,16 @@
 {
-  "pictures" : {
-    "1001": {
+  "pictures" : [
+    { 
       "thumb" : "pictures/thumbs/A&G Wedding-1001.jpg",
       "full" : "pictures/full/A&G Wedding-1001.jpg"
     },
-    "1100": {
+    { 
       "thumb" : "pictures/thumbs/A&G Wedding-1100.jpg",
       "full" : "pictures/full/A&G Wedding-1100.jpg"
     },
-    "1122": {
+    { 
       "thumb" : "pictures/thumbs/A&G Wedding-1122.jpg",
       "full" : "pictures/full/A&G Wedding-1122.jpg"
     }
-  }
+  ]
 }
