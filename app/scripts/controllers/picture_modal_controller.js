@@ -1,6 +1,6 @@
 'use strict';
 
 angular.module('angularWeddingApp')
-  .controller('PictureModalCtrl', function($scope, $modalInstance, pictureId){
-    $scope.pictureId = pictureId;
+  .controller('PictureModalCtrl', function($scope, $http, thumbnail){
+    $scope.thumbnail = thumbnail;
 });

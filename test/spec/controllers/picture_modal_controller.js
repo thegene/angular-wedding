@@ -18,11 +18,11 @@ describe('Controller: PictureModalCtrl', function () {
     Controller = $controller('PictureModalCtrl', {
       $scope: scope,
       $modalInstance: mockModalInstance,
-      pictureId: 7
+      thumbnail: 'pictures/thumbs/something.jpg'
     })
   }));
 
-  it('has a single picture id', function(){
-    expect(scope.pictureId).toBe(7);
+  it('has a thumbnail', function(){
+    expect(scope.thumbnail).toBe('pictures/thumbs/something.jpg');
   });
 });
