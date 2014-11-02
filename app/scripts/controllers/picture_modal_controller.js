@@ -4,9 +4,9 @@ angular.module('angularWeddingApp')
   .controller('PictureModalCtrl', function($scope, $http, $modalInstance, 
       thumbnail, full){
 
-    var fileName = function(full_file){
-      return full_file.substring(full_file.lastIndexOf('/') + 1);
-    }
+    var fileName = function(fullFile){
+      return fullFile.substring(fullFile.lastIndexOf('/') + 1);
+    };
 
     $scope.thumbnail = thumbnail;
     $scope.thumbName = fileName(thumbnail);
@@ -16,5 +16,5 @@ angular.module('angularWeddingApp')
 
     $scope.close = function() {
       $modalInstance.close();
-    }
+    };
 });
