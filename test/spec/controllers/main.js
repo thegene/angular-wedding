@@ -5,18 +5,47 @@ describe('Controller: MainCtrl', function () {
   // load the controller's module
   beforeEach(module('angularWeddingApp'));
 
-  var MainCtrl,
-    scope;
+  var createController, scope, injector, mockBackend;
 
   // Initialize the controller and a mock scope
-  beforeEach(inject(function ($controller, $rootScope) {
-    scope = $rootScope.$new();
-    MainCtrl = $controller('MainCtrl', {
-      $scope: scope
-    });
+  beforeEach(inject(function ($injector) {
+    injector = $injector
+    scope = $injector.get('$rootScope');
+    mockBackend = injector.get('$httpBackend');
+
+    createController = function(){ 
+      injector.get('$controller')('MainCtrl', {
+        $scope: scope
+      });
+    };
   }));
 
-  it('has pictures', function () {
-    expect(scope.pictureIds.length).toBe(3); // just to get something down for now
+  describe('Given a MainCtrl', function(){
+    it('has a modal', function() {
+      var controller = createController();
+      expect(scope.openModal).toBeDefined();
+    });
+  });
+
+  describe('Given manifest file with 3 pictures', function() {
+    var mockPicturesResponse = { "pictures" : [
+        {
+          "thumb" : "pictures/thumbs/blah.jpg"
+        },
+        {
+          "thumb" : "pictures/thumbs/foo.jpg"
+        },
+        {
+          "thumb" : "pictures/thumbs/bar.jpg"
+        }
+      ]};
+
+    it('has pictures', function () {
+      mockBackend.expectGET('pictures/pictures.json')
+        .respond(mockPicturesResponse);
+      createController();
+      mockBackend.flush();
+      expect(scope.pictures.length).toBe(3);
+    });
   });
 });
