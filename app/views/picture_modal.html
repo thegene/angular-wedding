@@ -1,7 +1,18 @@
-<div class="picture">
+<div class="picture-modal">
+
   <img ng-src="{{ thumbnail }}" />
-  <a class="download full glyphicon glyphicon-download"
-     download="{{ fullName }}", ng-href="{{ full }}">Download full size</a>
-  <a class="download thumb glyphicon glyphicon-download"
-     download="{{ thumbName }}", ng-href="{{ thumbnail }}">Download small</a>
+
+  <div class="close-wrapper">
+    <a class="close-picture" ng-click="close()">X</a>
+  </div>
+
+  <div class="download left">
+    <a class="full glyphicon glyphicon-download"
+       download="{{ fullName }}", ng-href="{{ full }}">Full size</a>
+  </div>
+
+  <div class="download right">
+    <a class="thumb glyphicon glyphicon-download"
+       download="{{ thumbName }}", ng-href="{{ thumbnail }}">Small</a>
+  </div>
 </div>
