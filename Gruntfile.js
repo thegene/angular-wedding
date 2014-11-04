@@ -380,9 +380,14 @@ module.exports = function (grunt) {
 
     // Test settings
     karma: {
-      unit: {
+      options: {
         configFile: 'test/spec/karma.conf.js',
+      },
+      watch: {
         singleRun: false
+      },
+      unit: {
+        singleRun: true
       }
     },
 
@@ -395,7 +400,7 @@ module.exports = function (grunt) {
           // Arguments passed to the command
         }
       },
-      your_target: {   // Grunt requires at least one target to run so you can simply put 'all: {}' here too.
+      all: {   // Grunt requires at least one target to run so you can simply put 'all: {}' here too.
         options: {
           configFile: "test/e2e/protractor.conf.js", // Target-specific config file
           args: {} // Target-specific arguments
@@ -444,13 +449,20 @@ module.exports = function (grunt) {
     'connect:test'
   ]);
 
-  grunt.registerTask('test', [
+  grunt.registerTask('unit', [
     'testPrep',
-    'karma'
+    'karma:watch'
   ]);
 
   grunt.registerTask('e2e', [
     'testPrep',
+    'protractor_webdriver',
+    'protractor'
+  ]);
+
+  grunt.registerTask('test', [
+    'testPrep',
+    'karma:unit',
     'protractor_webdriver',
     'protractor'
   ]);
