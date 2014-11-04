@@ -381,11 +381,40 @@ module.exports = function (grunt) {
     // Test settings
     karma: {
       unit: {
-        configFile: 'test/karma.conf.js',
+        configFile: 'test/spec/karma.conf.js',
         singleRun: false
+      }
+    },
+
+    protractor: {
+      options: {
+        configFile: "node_modules/protractor/referenceConf.js", // Default config file
+        keepAlive: true, // If false, the grunt process stops when the test fails.
+        noColor: false, // If true, protractor will not use colors in its output.
+        args: {
+          // Arguments passed to the command
+        }
+      },
+      your_target: {   // Grunt requires at least one target to run so you can simply put 'all: {}' here too.
+        options: {
+          configFile: "test/e2e/protractor.conf.js", // Target-specific config file
+          args: {} // Target-specific arguments
+        }
+      },
+    },
+
+    protractor_webdriver: {
+      start: {
+        options: {
+          path: 'node_modules/protractor/bin/',
+          command: 'webdriver-manager start'
+        }
       }
     }
   });
+
+  grunt.loadNpmTasks('grunt-protractor-runner');
+  grunt.loadNpmTasks('grunt-protractor-webdriver');
 
 
   grunt.registerTask('serve', 'Compile then start a connect web server', function (target) {
@@ -408,12 +437,22 @@ module.exports = function (grunt) {
     grunt.task.run(['serve:' + target]);
   });
 
-  grunt.registerTask('test', [
+  grunt.registerTask('testPrep', [
     'clean:server',
     'concurrent:test',
     'autoprefixer',
-    'connect:test',
+    'connect:test'
+  ]);
+
+  grunt.registerTask('test', [
+    'testPrep',
     'karma'
+  ]);
+
+  grunt.registerTask('e2e', [
+    'testPrep',
+    'protractor_webdriver',
+    'protractor'
   ]);
 
   grunt.registerTask('build', [
