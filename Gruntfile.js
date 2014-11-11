@@ -360,6 +360,11 @@ module.exports = function (grunt) {
         cwd: '<%= yeoman.app %>/styles',
         dest: '.tmp/styles/',
         src: '{,*/}*.css'
+      },
+
+      pictureManifest: {
+        src: 'app/pictures/devPictures.json',
+        dest: 'app/pictures/pictures.json'
       }
     },
 

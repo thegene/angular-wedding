@@ -5,3 +5,4 @@ dist
 bower_components*.sublime-*
 *.sublime-*
 bower_components/
+app/pictures/pictures.json
