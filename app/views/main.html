@@ -1,6 +1,4 @@
-<div class="row">
-  <div ng-repeat="picture in pictures" class="col-lg-4 col-sm-6 col-xs-12">
-    <img ng-src="{{ picture.thumb }}" 
-      ng-click="openModal( '{{ picture.thumb }}', '{{ picture.full }}' )"/>
-  </div>
+<div deckgrid class="deckgrid" source="pictures">
+  <img ng-src="{{ card.thumb }}" 
+    ng-click="mother.openModal( '{{ card.thumb }}', '{{ card.full }}' )"/>
 </div>

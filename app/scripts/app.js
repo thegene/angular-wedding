@@ -18,6 +18,7 @@ angular
     'ngTouch',
     'ui.bootstrap',
     'weddingFilters',
+    'akoenig.deckgrid'
   ])
   .config(function ($routeProvider) {
     $routeProvider
