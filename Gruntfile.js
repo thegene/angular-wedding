@@ -362,8 +362,13 @@ module.exports = function (grunt) {
         src: '{,*/}*.css'
       },
 
-      pictureManifest: {
+      devPictures: {
         src: 'app/pictures/devPictures.json',
+        dest: 'app/pictures/pictures.json'
+      },
+
+      layoutPictures: {
+        src: 'app/pictures/devLayoutPictures.json',
         dest: 'app/pictures/pictures.json'
       }
     },
@@ -426,6 +431,8 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-protractor-runner');
   grunt.loadNpmTasks('grunt-protractor-webdriver');
 
+  var env = grunt.option('env') || 'dev';
+  var copyPictureManifest = 'copy:' + env + 'Pictures';
 
   grunt.registerTask('serve', 'Compile then start a connect web server', function (target) {
     if (target === 'dist') {
@@ -434,6 +441,7 @@ module.exports = function (grunt) {
 
     grunt.task.run([
       'clean:server',
+      copyPictureManifest,
       'wiredep',
       'concurrent:server',
       'autoprefixer',
@@ -441,6 +449,7 @@ module.exports = function (grunt) {
       'watch'
     ]);
   });
+
 
   grunt.registerTask('server', 'DEPRECATED TASK. Use the "serve" task instead', function (target) {
     grunt.log.warn('The `server` task has been deprecated. Use `grunt serve` to start a server.');
@@ -481,12 +490,12 @@ module.exports = function (grunt) {
     'concat',
     'ngAnnotate',
     'copy:dist',
+    copyPictureManifest,
     'cdnify',
     'cssmin',
     'uglify',
     'filerev',
-    'usemin',
-    'htmlmin'
+    'usemin'
   ]);
 
   grunt.registerTask('default', [
