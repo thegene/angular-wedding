@@ -20,7 +20,7 @@ describe('Controller: PictureModalCtrl', function () {
       $modalInstance: mockModalInstance,
       thumbnail: 'pictures/thumbs/some_thumb.jpg',
       full: 'pictures/full/some_full_pic.jpg'
-    })
+    });
   }));
 
   describe('thumbnails', function(){

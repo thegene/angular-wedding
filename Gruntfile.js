@@ -1,4 +1,5 @@
 // Generated on 2014-10-17 using generator-angular 0.9.8
+/* jshint camelcase:false */
 'use strict';
 
 // # Globbing
@@ -403,7 +404,7 @@ module.exports = function (grunt) {
 
     protractor: {
       options: {
-        configFile: "node_modules/protractor/referenceConf.js", // Default config file
+        configFile: 'node_modules/protractor/referenceConf.js', // Default config file
         keepAlive: true, // If false, the grunt process stops when the test fails.
         noColor: false, // If true, protractor will not use colors in its output.
         args: {
@@ -412,7 +413,7 @@ module.exports = function (grunt) {
       },
       all: {   // Grunt requires at least one target to run so you can simply put 'all: {}' here too.
         options: {
-          configFile: "test/e2e/protractor.conf.js", // Target-specific config file
+          configFile: 'test/e2e/protractor.conf.js', // Target-specific config file
           args: {} // Target-specific arguments
         }
       },
@@ -479,7 +480,8 @@ module.exports = function (grunt) {
     'testPrep',
     'karma:unit',
     'protractor_webdriver',
-    'protractor'
+    'protractor',
+    'jshint'
   ]);
 
   grunt.registerTask('build', [

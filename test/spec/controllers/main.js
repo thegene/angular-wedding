@@ -9,7 +9,7 @@ describe('Controller: MainCtrl', function () {
 
   // Initialize the controller and a mock scope
   beforeEach(inject(function ($injector) {
-    injector = $injector
+    injector = $injector;
     scope = $injector.get('$rootScope');
     mockBackend = injector.get('$httpBackend');
 
@@ -22,21 +22,21 @@ describe('Controller: MainCtrl', function () {
 
   describe('Given a MainCtrl', function(){
     it('has a modal', function() {
-      var controller = createController();
+      createController();
       expect(scope.openModal).toBeDefined();
     });
   });
 
   describe('Given manifest file with 3 pictures', function() {
-    var mockPicturesResponse = { "pictures" : [
+    var mockPicturesResponse = { 'pictures' : [
         {
-          "thumb" : "pictures/thumbs/blah.jpg"
+          'thumb' : 'pictures/thumbs/blah.jpg'
         },
         {
-          "thumb" : "pictures/thumbs/foo.jpg"
+          'thumb' : 'pictures/thumbs/foo.jpg'
         },
         {
-          "thumb" : "pictures/thumbs/bar.jpg"
+          'thumb' : 'pictures/thumbs/bar.jpg'
         }
       ]};
 
