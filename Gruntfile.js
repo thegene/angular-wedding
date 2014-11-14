@@ -458,6 +458,7 @@ module.exports = function (grunt) {
 
   grunt.registerTask('testPrep', [
     'clean:server',
+    copyPictureManifest,
     'concurrent:test',
     'autoprefixer',
     'connect:test'

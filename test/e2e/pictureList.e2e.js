@@ -3,7 +3,7 @@
 describe('Main', function(){
   browser.get('http://localhost:9000/')
   var getPictureList = function() {
-    return element.all(by.repeater('picture in pictures'));
+    return element.all(by.repeater('card in column'));
   };
 
   describe('Picture List', function(){
