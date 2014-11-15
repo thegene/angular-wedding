@@ -405,7 +405,7 @@ module.exports = function (grunt) {
     protractor: {
       options: {
         configFile: 'test/e2e/protractor.conf.js',
-        keepAlive: true, // If false, the grunt process stops when the test fails.
+        keepAlive: false, // If false, the grunt process stops when the test fails.
         noColor: false, // If true, protractor will not use colors in its output.
         args: {
           // Arguments passed to the command
@@ -417,20 +417,10 @@ module.exports = function (grunt) {
           } // Target-specific arguments
         }
       },
-    },
-
-    protractor_webdriver: {
-      start: {
-        options: {
-          path: 'node_modules/protractor/bin/',
-          command: 'webdriver-manager start'
-        }
-      }
     }
   });
 
   grunt.loadNpmTasks('grunt-protractor-runner');
-  grunt.loadNpmTasks('grunt-protractor-webdriver');
 
   var env = grunt.option('env') || 'dev';
   var copyPictureManifest = 'copy:' + env + 'Pictures';
