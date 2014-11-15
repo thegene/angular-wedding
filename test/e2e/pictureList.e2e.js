@@ -1,7 +1,7 @@
 'use strict';
 
 describe('Main', function(){
-  browser.get('http://localhost:9000/')
+  browser.get('/')
   var getPictureList = function() {
     return element.all(by.repeater('card in column'));
   };
