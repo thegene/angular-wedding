@@ -1,16 +1,16 @@
 {
   "pictures" : [
     { 
-      "thumb" : "pictures/thumbs/A&G Wedding-1001.jpg",
-      "full" : "pictures/full/A&G Wedding-1001.jpg"
+      "thumb" : "pictures/dev/thumbs/A&G Wedding-1001.jpg",
+      "full" : "pictures/dev/full/A&G Wedding-1001.jpg"
     },
     { 
-      "thumb" : "pictures/thumbs/A&G Wedding-1100.jpg",
-      "full" : "pictures/full/A&G Wedding-1100.jpg"
+      "thumb" : "pictures/dev/thumbs/A&G Wedding-1100.jpg",
+      "full" : "pictures/dev/full/A&G Wedding-1100.jpg"
     },
     { 
-      "thumb" : "pictures/thumbs/A&G Wedding-1122.jpg",
-      "full" : "pictures/full/A&G Wedding-1122.jpg"
+      "thumb" : "pictures/dev/thumbs/A&G Wedding-1122.jpg",
+      "full" : "pictures/dev/full/A&G Wedding-1122.jpg"
     }
   ]
 }
