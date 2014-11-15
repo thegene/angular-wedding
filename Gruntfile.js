@@ -371,6 +371,11 @@ module.exports = function (grunt) {
       layoutPictures: {
         src: 'app/pictures/devLayoutPictures.json',
         dest: 'app/pictures/pictures.json'
+      },
+
+      productionPictures: {
+        src: 'app/pictures/prodPictures.json',
+        dest: 'app/pictures/pictures.json'
       }
     },
 
