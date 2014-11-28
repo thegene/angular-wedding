@@ -354,6 +354,9 @@ module.exports = function (grunt) {
           cwd: '.',
           src: 'bower_components/bootstrap-sass-official/assets/fonts/bootstrap/*',
           dest: '<%= yeoman.dist %>'
+        }, {
+          src: '<%= yeoman.app %>/pictures/prodPictures.json',
+          dest: '<%= yeoman.dist %>/pictures/pictures.json'
         }]
       },
       styles: {
@@ -370,11 +373,6 @@ module.exports = function (grunt) {
 
       layoutPictures: {
         src: 'app/pictures/devLayoutPictures.json',
-        dest: 'app/pictures/pictures.json'
-      },
-
-      productionPictures: {
-        src: 'app/pictures/prodPictures.json',
         dest: 'app/pictures/pictures.json'
       }
     },
