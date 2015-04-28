@@ -8,7 +8,7 @@ set :repo_url, 'thegene@github.com:thegene/angular-wedding.git'
 # ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
 
 # Default deploy_to directory is /var/www/my_app_name
-set :deploy_to, '/var/www/apps/wedding'
+set :deploy_to, '/var/www/apps/wedding.eugenewestbrook.com'
 
 # Default value for :scm is :git
 # set :scm, :git

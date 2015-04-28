@@ -4,11 +4,18 @@ require 'pry'
 set :dev_picture_dir, File.expand_path('app/pictures/dev')
 
 namespace :pictures do
-  desc "Copies pictures directory, specify source and target"
+  desc "Copies pictures directory, specify source"
   task :upload do
     invoke 'pictures:build_bundle'
     invoke 'pictures:copy_to_destination'
     invoke 'pictures:clean_up_tmp'
+  end
+
+  desc "Links to the photos dir"
+  task :link do
+    on roles(:app) do
+      execute("ln -s #{destination_path('photos')} #{current_path}/photos")
+    end
   end
 
   task :build_bundle do
@@ -29,7 +36,7 @@ namespace :pictures do
     on roles(:app) do
       ensure_gone!(tar)
       upload!(fetch(:picture_bundle), deploy_to)
-      expand_tar!(tar, 'pictures')
+      expand_tar!(tar, 'photos')
       ensure_gone!(tar)
     end
   end
