@@ -1,5 +1,4 @@
 require 'fileutils'
-require 'pry'
 
 set :dev_picture_dir, File.expand_path('app/pictures/dev')
 
