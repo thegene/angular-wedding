@@ -354,9 +354,6 @@ module.exports = function (grunt) {
           cwd: '.',
           src: 'bower_components/bootstrap-sass-official/assets/fonts/bootstrap/*',
           dest: '<%= yeoman.dist %>'
-        }, {
-          src: '<%= yeoman.app %>/pictures/prodPictures.json',
-          dest: '<%= yeoman.dist %>/pictures/pictures.json'
         }]
       },
       styles: {
@@ -366,13 +363,18 @@ module.exports = function (grunt) {
         src: '{,*/}*.css'
       },
 
-      devPictures: {
+      developmentPictures: {
         src: 'app/pictures/devPictures.json',
         dest: 'app/pictures/pictures.json'
       },
 
       layoutPictures: {
         src: 'app/pictures/devLayoutPictures.json',
+        dest: 'app/pictures/pictures.json'
+      },
+
+      productionPictures: {
+        src: 'app/pictures/prodPictures.json',
         dest: 'app/pictures/pictures.json'
       }
     },
@@ -425,8 +427,8 @@ module.exports = function (grunt) {
 
   grunt.loadNpmTasks('grunt-protractor-runner');
 
-  var env = grunt.option('env') || 'dev';
-  var copyPictureManifest = 'copy:' + env + 'Pictures';
+  var environment = grunt.option('environment') || 'development';
+  var copyPictureManifest = 'copy:' + environment + 'Pictures';
 
   grunt.registerTask('serve', 'Compile then start a connect web server', function (target) {
     if (target === 'dist') {
