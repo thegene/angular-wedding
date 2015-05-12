@@ -40,19 +40,8 @@ set :deploy_to, '/var/www/apps/wedding.eugenewestbrook.com'
 # http://stackoverflow.com/questions/9762183/is-there-a-way-to-tell-capistrano-to-deploy-a-local-repository-to-a-remote-serve
 # https://discourse.roots.io/t/capistrano-run-grunt-locally-and-upload-files/2062/3
 
-
-task :something do
-  # invoke 'copy:pictures'
-end
-
 namespace :deploy do
-  after :restart, :clear_cache do
-    on roles(:web), in: :groups, limit: 3, wait: 10 do
-      # Here we can do anything such as:
-      # within release_path do
-      #   execute :rake, 'cache:clear'
-      # end
-    end
+  on roles(:app) do
+    
   end
-
 end

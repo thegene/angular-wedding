@@ -13,7 +13,7 @@ namespace :pictures do
   desc "Links to the photos dir"
   task :link do
     on roles(:app) do
-      execute("ln -s #{destination_path('photos')} #{current_path}/photos")
+      execute("ln -s #{tar.destination_path('photos')} #{current_path}/photos")
     end
   end
 
@@ -24,52 +24,30 @@ namespace :pictures do
       picture_bundle = set(:picture_bundle,
         "#{File.expand_path('/tmp')}/#{tar_file_name}")
 
-      ensure_gone!(picture_bundle)
-      build_tar(source, picture_bundle)
+      tar.ensure_gone!(picture_bundle)
+      tar.build_tar(source, picture_bundle)
     end
   end
 
   task :copy_to_destination do
-    tar = destination_path(fetch(:tar_file_name))
+    tar_file = tar.destination_path(fetch(:tar_file_name))
 
     on roles(:app) do
-      ensure_gone!(tar)
+      tar.ensure_gone!(tar_file)
       upload!(fetch(:picture_bundle), deploy_to)
-      expand_tar!(tar, 'photos')
-      ensure_gone!(tar)
+      tar.expand_tar!(tar_file, 'photos')
+      tar.ensure_gone!(tar_file)
     end
   end
 
   task :clean_up_tmp do
     run_locally do
-      ensure_gone!(fetch(:picture_bundle))
+      tar.ensure_gone!(fetch(:picture_bundle))
     end
   end
 
-  def ensure_gone!(file_path)
-    execute("rm -rf #{file_path}") if test("ls #{file_path}")
-  end
-
-  def build_tar(source, target)
-    execute "tar jcvf #{target} --directory=#{source} ."
-  end
-
-  def expand_tar!(tar, target_name)
-    target = destination_path(target_name)
-    ensure_empty_dir(target)
-    execute "tar xvf #{tar} -C #{target}"
-  end
-
-  def destination_path(path)
-    "#{deploy_to}/#{path}"
-  end
-
-  def ensure_empty_dir(dir)
-    if test("ls #{dir}")
-      execute("rm -rf #{dir}/*")
-    else
-      execute("mkdir #{dir}")
-    end
+  def tar
+    fetch(:tar, TarHelper.new(self))
   end
 
 end
