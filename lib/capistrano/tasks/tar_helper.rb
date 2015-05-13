@@ -1,26 +1,57 @@
 class TarHelper
-  attr_accessor :cap
+  attr_accessor :cap, :tar_name, :opts
 
-  def initialize(cap)
+  def initialize(cap, tar_name, opts={})
     @cap = cap
+    @tar_name = tar_name
+    @opts = opts
   end
+
+  def delete_tmp!
+    ensure_gone!(local_tmp_file)
+  end
+
+  def build_local_tar_file_from(source)
+    ensure_gone!(local_tmp_file)
+    build_tar!(source, local_tmp_file)
+  end
+
+  def upload_and_expand_as!(upload_as)
+    ensure_gone!(destination_path)
+    cap.upload!(local_tmp_file, cap.deploy_to)
+    expand_tar!(destination_path, upload_as)
+    ensure_gone!(destination_path)
+  end
+
+  private
 
   def ensure_gone!(file_path)
     cap.execute("rm -rf #{file_path}") if cap.test("ls #{file_path}")
   end
 
-  def build_tar(source, target)
+  def expand_tar!(tar, as)
+    ensure_empty_dir(as)
+    cap.execute "tar xvf #{tar} -C #{as}"
+  end
+
+  def full_tar_name
+    "#{tar_name}.tar.bz2"
+  end
+
+  def local_tmp_dir
+    opts[:tmp_dir] || '/tmp'
+  end
+
+  def local_tmp_file
+    "#{local_tmp_dir}/#{full_tar_name}"
+  end
+
+  def destination_path
+    "#{cap.deploy_to}/#{full_tar_name}"
+  end
+
+  def build_tar!(source, target)
     cap.execute "tar jcvf #{target} --directory=#{source} ."
-  end
-
-  def expand_tar!(tar, target_name)
-    target = destination_path(target_name)
-    ensure_empty_dir(target)
-    cap.execute "tar xvf #{tar} -C #{target}"
-  end
-
-  def destination_path(path)
-    "#{cap.deploy_to}/#{path}"
   end
 
   def ensure_empty_dir(dir)
