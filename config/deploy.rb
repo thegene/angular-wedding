@@ -35,13 +35,12 @@ set :deploy_to, '/var/www/apps/wedding.eugenewestbrook.com'
 # set :keep_releases, 5
 
 
+# used to identify what to tar
+set(:tar_source_path, 'dist')
 
 
 # http://stackoverflow.com/questions/9762183/is-there-a-way-to-tell-capistrano-to-deploy-a-local-repository-to-a-remote-serve
 # https://discourse.roots.io/t/capistrano-run-grunt-locally-and-upload-files/2062/3
 
-namespace :deploy do
-  on roles(:app) do
-    
-  end
+task :deploy do
 end

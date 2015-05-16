@@ -17,8 +17,7 @@ class TarHelper
   end
 
   def upload_and_expand_as!(upload_as)
-    ensure_gone!(destination_path)
-    cap.upload!(local_tmp_file, cap.deploy_to)
+    cap.upload!(local_tmp_file, target)
     expand_tar!(destination_path, upload_as)
     ensure_gone!(destination_path)
   end
@@ -47,7 +46,11 @@ class TarHelper
   end
 
   def destination_path
-    "#{cap.deploy_to}/#{full_tar_name}"
+    "#{target}/#{full_tar_name}"
+  end
+
+  def target
+    opts[:target] || cap.deploy_to
   end
 
   def build_tar!(source, target)
