@@ -5,6 +5,8 @@ set :dev_picture_dir, File.expand_path('app/pictures/dev')
 namespace :pictures do
   desc "Copies pictures directory, specify source"
   task :upload do
+    require 'pry'
+    binding.pry
     source = ENV['source'] || fetch(:dev_picture_dir) # @todo remove dev_picture_dir
 
     run_locally do
@@ -28,7 +30,10 @@ namespace :pictures do
   end
 
   def tar
-    fetch(:tar, TarHelper.new(self, 'picture_bundle'))
+    if !fetch(:picture_bundle_tar)
+      set(:picture_bundle_tar, TarHelper.new(self, 'picture_bundle'))
+    end
+    fetch(:picture_bundle_tar)
   end
 
 end
