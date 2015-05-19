@@ -25,4 +25,5 @@ require 'capistrano/deploy'
 
 
 # Load custom tasks from `lib/capistrano/tasks` if you have any defined
+import 'lib/capistrano/tasks/pictures.rake'
 Dir.glob('lib/capistrano/tasks/*').each { |r| import r }

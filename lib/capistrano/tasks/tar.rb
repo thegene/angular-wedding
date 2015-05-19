@@ -23,6 +23,8 @@ namespace :tar do
     end
   end
 
+  after :deploy, 'pictures:link'
+
   def release_tar
    TarHelper.new(self, ['wedding', fetch(:current_revision)].join('.'), target: releases_path)
   end
@@ -41,6 +43,7 @@ namespace :tar do
     invoke 'tar:ensure_revision'
     invoke 'tar:set_current_revision'
   end
+
 end
 
 namespace :deploy do
