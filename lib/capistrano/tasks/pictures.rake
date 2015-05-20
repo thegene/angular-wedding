@@ -5,14 +5,18 @@ set :dev_picture_dir, File.expand_path('app/pictures/dev')
 namespace :pictures do
   desc "Copies pictures directory, specify source"
   task :upload do
-    source = ENV['source'] || fetch(:dev_picture_dir) # @todo remove dev_picture_dir
+    if ENV['source']
+      source = ENV['source']
+    else
+      raise 'Please specify source'
+    end
 
     run_locally do
       picture_bundle_tar.build_local_tar_file_from(source)
     end
 
     on roles(:app) do
-      picture_bundle_tar.upload_and_expand_as!("#{deploy_to}/photos")
+      picture_bundle_tar.upload_and_expand_as!("#{shared_path}/photos")
     end
 
     run_locally do
@@ -23,7 +27,7 @@ namespace :pictures do
   desc "Links to the photos dir"
   task :link do
     on roles(:app) do
-      execute("ln -s #{deploy_to}/photos #{current_path}/photos")
+      execute("ln -s #{shared_path}/photos #{current_path}/photos")
     end
   end
 
