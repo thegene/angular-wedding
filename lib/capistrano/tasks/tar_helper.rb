@@ -42,7 +42,7 @@ class TarHelper
   end
 
   def local_tmp_file
-    "#{local_tmp_dir}/#{full_tar_name}"
+    opts['local_tmp_file'] || "#{local_tmp_dir}/#{full_tar_name}"
   end
 
   def destination_path
