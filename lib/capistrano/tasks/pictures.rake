@@ -18,7 +18,7 @@ namespace :pictures do
   end
 
   desc 'Uploads and expands a pictures tar file, specify upload_tar to specify file'
-  task upload_pictures: :defaults do
+  task upload_pictures_tar: :defaults do
     on roles(:app) do
       picture_bundle_tar.upload_and_expand_as!("#{shared_path}/photos")
     end
@@ -32,7 +32,7 @@ namespace :pictures do
 
   task :defaults do
     [:source, :upload_tar].each do |var|
-      set(:var, ENV[var.to_s]) if ENV[var.to_s]
+      set(var, ENV[var.to_s]) if ENV[var.to_s]
     end
   end
 

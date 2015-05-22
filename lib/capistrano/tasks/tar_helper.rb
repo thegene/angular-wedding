@@ -42,7 +42,7 @@ class TarHelper
   end
 
   def local_tmp_file
-    opts['local_tmp_file'] || "#{local_tmp_dir}/#{full_tar_name}"
+    opts[:local_tmp_file] || "#{local_tmp_dir}/#{full_tar_name}"
   end
 
   def destination_path
@@ -50,7 +50,7 @@ class TarHelper
   end
 
   def target
-    opts[:target] || cap.deploy_to
+    opts[:target] || cap.shared_path
   end
 
   def build_tar!(source, target)
