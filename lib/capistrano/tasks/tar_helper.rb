@@ -1,5 +1,5 @@
 class TarHelper
-  attr_accessor :cap, :local_source, :local_path, :target_path
+  attr_accessor :cap, :source, :local_path, :target_path
 
   def initialize(cap, opts={})
     @cap = cap
@@ -14,8 +14,7 @@ class TarHelper
 
   def build_local_tar_file
     unless local_file_exists?
-      ensure_gone!(local_path)
-      build_tar!(source, local_path)
+      build_tar!
     end
   end
 
@@ -52,8 +51,8 @@ class TarHelper
     opts[:target] || cap.shared_path
   end
 
-  def build_tar!(source, target)
-    cap.execute "tar jcvf #{target} --directory=#{source} ."
+  def build_tar!
+    cap.execute "tar jcvf #{local_path} --directory=#{source} ."
   end
 
   def ensure_empty_dir(dir)
