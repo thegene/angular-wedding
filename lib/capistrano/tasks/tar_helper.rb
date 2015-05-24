@@ -1,25 +1,32 @@
 class TarHelper
-  attr_accessor :cap, :tar_name, :opts
+  attr_accessor :cap, :local_source, :local_path, :target_path
 
-  def initialize(cap, tar_name, opts={})
+  def initialize(cap, opts={})
     @cap = cap
-    @tar_name = tar_name
-    @opts = opts
+    @local_path = opts[:local_path]
+    @target_path = opts[:target_path]
+    @source = opts[:source]
   end
 
   def delete_tmp!
-    ensure_gone!(local_tmp_file)
+    ensure_gone!(local_path)
   end
 
-  def build_local_tar_file_from(source)
-    ensure_gone!(local_tmp_file)
-    build_tar!(source, local_tmp_file)
+  def build_local_tar_file
+    unless local_file_exists?
+      ensure_gone!(local_path)
+      build_tar!(source, local_path)
+    end
   end
 
   def upload_and_expand_as!(upload_as)
-    cap.upload!(local_tmp_file, target)
+    cap.upload!(local_path, target)
     expand_tar!(destination_path, upload_as)
     ensure_gone!(destination_path)
+  end
+
+  def local_file_exists?
+    cap.test("[ -f #{local_path} ]")
   end
 
   private
@@ -34,19 +41,7 @@ class TarHelper
   end
 
   def full_tar_name
-    if opts[:local_tmp_file]
-      opts[:local_tmp_file].split('/').last
-    else
-      "#{tar_name}.tar.bz2"
-    end
-  end
-
-  def local_tmp_dir
-    opts[:tmp_dir] || '/tmp'
-  end
-
-  def local_tmp_file
-    opts[:local_tmp_file] || "#{local_tmp_dir}/#{full_tar_name}"
+    local_path.split('/').last
   end
 
   def destination_path

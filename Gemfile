@@ -4,4 +4,5 @@ source "https://rubygems.org"
 gem 'compass', '~> 1.0.3'
 
 gem 'capistrano', '~> 3.4.0'
-gem 'pry', groups: ['development']
+gem 'pry', groups: ['development', 'test']
+gem 'rspec', '3.2.0'
