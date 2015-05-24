@@ -34,7 +34,11 @@ class TarHelper
   end
 
   def full_tar_name
-    "#{tar_name}.tar.bz2"
+    if opts[:local_tmp_file]
+      opts[:local_tmp_file].split('/').last
+    else
+      "#{tar_name}.tar.bz2"
+    end
   end
 
   def local_tmp_dir

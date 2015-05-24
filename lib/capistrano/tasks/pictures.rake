@@ -4,34 +4,34 @@ set :dev_picture_dir, File.expand_path('app/pictures/dev')
 
 namespace :pictures do
   desc "Copies pictures directory, specify source"
-  task upload: :defaults do
-    invoke :build_local_tar_file
-    invoke :upload_pictures
-    invoke :delete_tmp
+  task upload: :set_vars do
+    invoke 'pictures:build_local_tar_file'
+    invoke 'pictures:upload_pictures_tar'
+    invoke 'pictures:delete_tmp'
   end
 
   desc 'Builds local tar file from provided source'
-  task build_local_tar_file: :defaults do
+  task build_local_tar_file: :set_vars do
     run_locally do
       picture_bundle_tar.build_local_tar_file_from(fetch(:source, ENV['source']))
     end
   end
 
-  desc 'Uploads and expands a pictures tar file, specify upload_tar to specify file'
-  task upload_pictures_tar: :defaults do
+  desc 'Uploads and expands a pictures tar file, specify upload to specify file'
+  task upload_pictures_tar: :set_vars do
     on roles(:app) do
       picture_bundle_tar.upload_and_expand_as!("#{shared_path}/photos")
     end
   end
 
-  task delete_tmp: :defaults do
+  task delete_tmp: :set_vars do
     run_locally do
       picture_bundle_tar.delete_tmp!
     end
   end
 
-  task :defaults do
-    [:source, :upload_tar].each do |var|
+  task :set_vars do
+    [:source, :upload].each do |var|
       set(var, ENV[var.to_s]) if ENV[var.to_s]
     end
   end
@@ -45,7 +45,7 @@ namespace :pictures do
 
   def picture_bundle_tar
     TarHelper.new(self, 'picture_bundle',
-      local_tmp_file: fetch(:upload_tar, nil))
+      local_tmp_file: fetch(:upload, nil))
   end
 
 end
