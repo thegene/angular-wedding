@@ -23,7 +23,7 @@ class TarHelper
 
   def expand_as!(target_name)
     "#{target_upload_dir}/#{target_name}".tap do |target|
-      cap.execute("mkdir #{target}") unless !cap.test("[ -f #{target} ]")
+      cap.execute("mkdir #{target}") unless cap.test("[ -d #{target} ]")
       cap.execute "tar xvf #{uploaded_file_name} --directory=#{target}"
     end
     ensure_gone!(uploaded_file_name)
