@@ -11,23 +11,29 @@ namespace :tar do
 
   task :create_release do
     run_locally do
-      release_tar.build_local_tar_file_from(fetch(:tar_source_path))
+      release_tar.build_local_tar_file_from('dist/')
     end
 
     on roles(:all) do
-      release_tar.upload_and_expand_as!(release_path)
+      release_tar.tap do |tar|
+        tar.upload!
+        tar.expand_as!(fetch(:current_revision))
+      end
     end
 
     run_locally do
-      release_tar.delete_tmp!
+      release_tar.delete_local_tar!
     end
   end
 
   after :deploy, 'pictures:link'
 
   def release_tar
-   TarHelper.new(self, ['wedding', fetch(:current_revision)].join('.'), target: releases_path)
+   TarHelper.new(self, 
+    local_tar_file: ['wedding', fetch(:current_revision)].join('.'), 
+    target_upload_dir: releases_path)
   end
+
 
   task :ensure_revision do
     run_locally {

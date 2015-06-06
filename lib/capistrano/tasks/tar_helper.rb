@@ -1,65 +1,53 @@
 class TarHelper
-  attr_accessor :cap, :source, :local_path, :target_path
+  attr_accessor :cap, :local_tar_file, :target_upload_dir
 
-  def initialize(cap, opts={})
+  def initialize(cap, local_tar_file:, target_upload_dir:)
     @cap = cap
-    @local_path = opts[:local_path]
-    @target_path = opts[:target_path]
-    @source = opts[:source]
+    @local_tar_file = local_tar_file
+    @target_upload_dir = target_upload_dir
   end
 
-  def delete_tmp!
-    ensure_gone!(local_path)
+  def delete_local_tar!
+    ensure_gone!(local_tar_file)
   end
 
-  def build_local_tar_file
+  def build_local_tar_file_from(source)
     unless local_file_exists?
-      build_tar!
+      build_tar_from!(source)
     end
   end
 
-  def upload_and_expand_as!(upload_as)
-    cap.upload!(local_path, target)
-    expand_tar!(destination_path, upload_as)
-    ensure_gone!(destination_path)
+  def upload!
+    cap.upload!(local_tar_file, target_upload_dir)
   end
 
-  def local_file_exists?
-    cap.test("[ -f #{local_path} ]")
+  def expand_as!(target_name)
+    "#{target_upload_dir}/#{target_name}".tap do |target|
+      cap.execute("mkdir #{target}") unless !cap.test("[ -f #{target} ]")
+      cap.execute "tar xvf #{uploaded_file_name} --directory=#{target}"
+    end
+    ensure_gone!(uploaded_file_name)
   end
 
   private
 
+  def local_file_exists?
+    cap.test("[ -f #{local_tar_file} ]")
+  end
+
   def ensure_gone!(file_path)
-    cap.execute("rm -rf #{file_path}") if cap.test("ls #{file_path}")
+    cap.execute("rm -f #{file_path}") if cap.test("[ -f #{file_path} ]")
   end
 
-  def expand_tar!(tar, as)
-    ensure_empty_dir(as)
-    cap.execute "tar xvf #{tar} -C #{as}"
+  def tar_file_name
+    local_tar_file.split('/').last
   end
 
-  def full_tar_name
-    local_path.split('/').last
+  def uploaded_file_name
+    File.join(target_upload_dir, tar_file_name)
   end
 
-  def destination_path
-    "#{target}/#{full_tar_name}"
-  end
-
-  def target
-    opts[:target] || cap.shared_path
-  end
-
-  def build_tar!
-    cap.execute "tar jcvf #{local_path} --directory=#{source} ."
-  end
-
-  def ensure_empty_dir(dir)
-    if cap.test("ls #{dir}")
-      cap.execute("rm -rf #{dir}/*")
-    else
-      cap.execute("mkdir #{dir}")
-    end
+  def build_tar_from!(source)
+    cap.execute "tar jcvf #{local_tar_file} --directory=#{source} ."
   end
 end

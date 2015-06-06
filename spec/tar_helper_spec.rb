@@ -31,7 +31,7 @@ describe TarHelper do
           tar.build_local_tar_file
         end
       end
-      context 'when this does not already exists' do
+      context 'which does not already exist' do
         before do
           allow(mock_cap).to receive(:test).with("[ -f #{local_path} ]")
             .and_return(false)
@@ -41,6 +41,12 @@ describe TarHelper do
           expect(mock_cap).to receive(:execute)
             .with("tar jcvf #{local_path} --directory=#{source} .")
           tar.build_local_tar_file
+        end
+      end
+
+      describe 'Uploading and expanding files' do
+        context 'when told to upload and expand as foo' do
+          let(:expand_as) { '/target/expand/path' }
         end
       end
     end

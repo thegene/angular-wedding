@@ -39,12 +39,15 @@ namespace :pictures do
   desc "Links to the photos dir"
   task :link do
     on roles(:app) do
-      execute("ln -s #{shared_path}/photos #{current_path}/photos")
+      unless test("[ -L #{shared_path}/photos ]")
+        execute("ln -s #{shared_path}/photos #{current_path}/photos")
+      end
     end
   end
 
   def picture_bundle_tar
-    TarHelper.new(self, 'picture_bundle',
+    TarHelper.new(self,
+      source: fetch(:source),
       local_tmp_file: fetch(:upload, nil))
   end
 
