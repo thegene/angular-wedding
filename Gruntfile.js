@@ -98,6 +98,10 @@ module.exports = function (grunt) {
                 '/bower_components',
                 connect.static('./bower_components')
               ),
+              connect().use(
+                '/pictures',
+                connect.static('./app/dev_pictures')
+              ),
               connect.static(appConfig.app)
             ];
           }
