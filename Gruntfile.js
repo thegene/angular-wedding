@@ -150,12 +150,14 @@ module.exports = function (grunt) {
           src: [
             '.tmp',
             '<%= yeoman.dist %>/{,*/}*',
-            '!<%= yeoman.dist %>/.git*'
+            '!<%= yeoman.dist %>/.git*',
+            '!<%= yeoman.dist %>/pictures{,*/}*',
           ]
         }]
       },
-      server: '.tmp'
+      server: '.tmp',
     },
+
 
     // Add vendor prefixed styles
     autoprefixer: {
@@ -367,17 +369,29 @@ module.exports = function (grunt) {
           dest: '<%= yeoman.dist %>'
         }]
       },
-      dev: {
-        expand: true,
-        cwd: '<%= yeoman.app %>/dev_pictures',
-        dest: '<%= yeoman.dist %>/pictures',
-        src: '**'
-      },
       styles: {
         expand: true,
         cwd: '<%= yeoman.app %>/styles',
         dest: '.tmp/styles/',
         src: '{,*/}*.css'
+      }
+    },
+
+    // Symlink pictures dir
+    symlink:{
+      options: {
+        overwrite: true
+      },
+      pictures: {
+        src: '<%= yeoman.app %>/dev_pictures',
+        dest: '<%= yeoman.dist %>/pictures',
+      }
+    },
+
+    // Cannot delete symlinks >:-(
+    shell: {
+      rmSymlink: {
+        command: 'rm <%= yeoman.dist %>/pictures'
       }
     },
 
@@ -428,6 +442,15 @@ module.exports = function (grunt) {
   });
 
   grunt.loadNpmTasks('grunt-protractor-runner');
+  grunt.loadNpmTasks('grunt-contrib-symlink');
+  grunt.loadNpmTasks('grunt-shell');
+
+
+  grunt.registerTask('setPictures', 'Sets picture-source for pictures dir', function(){
+    if (grunt.option('picture-source')) {
+      grunt.config.set('symlink.pictures.src', grunt.option('picture-source'));
+    }
+  });
 
   grunt.registerTask('serve', 'Compile then start a connect web server', function (target) {
     if (target === 'dist') {
@@ -447,6 +470,12 @@ module.exports = function (grunt) {
   grunt.registerTask('server', 'DEPRECATED TASK. Use the "serve" task instead', function (target) {
     grunt.log.warn('The `server` task has been deprecated. Use `grunt serve` to start a server.');
     grunt.task.run(['serve:' + target]);
+  });
+
+  grunt.registerTask('removeSymlink', 'Removes the pictures symlink if presennt', function(){
+    if (grunt.file.isLink('dist/pictures')){
+      grunt.task.run('shell:rmSymlink');
+    }
   });
 
   grunt.registerTask('testPrep', [
@@ -483,7 +512,9 @@ module.exports = function (grunt) {
     'concat',
     'ngAnnotate',
     'copy:dist',
-    'copy:dev',
+    'setPictures',
+    'removeSymlink',
+    'symlink:pictures',
     'cdnify',
     'cssmin',
     'uglify',
