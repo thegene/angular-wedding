@@ -41,7 +41,7 @@ describe('Controller: MainCtrl', function () {
       ]};
 
     it('has pictures', function () {
-      mockBackend.expectGET('pictures/pictures.json')
+      mockBackend.expectGET('pictures/manifest.json')
         .respond(mockPicturesResponse);
       createController();
       mockBackend.flush();

@@ -22,7 +22,7 @@ namespace :pictures do
     on roles(:app) do
       picture_bundle_tar.tap do |tar|
         tar.upload!
-        tar.expand_as!("photos")
+        tar.expand_as!("pictures")
       end
     end
   end
@@ -33,11 +33,11 @@ namespace :pictures do
     end
   end
 
-  desc "Links to the photos dir"
+  desc "Links to the pictures dir"
   task :link do
     on roles(:app) do
-      unless test("[ -L #{current_path}/photos ]")
-        execute("ln -s #{shared_path}/photos #{current_path}/photos")
+      unless test("[ -L #{current_path}/pictures ]")
+        execute("ln -s #{shared_path}/pictures #{current_path}/pictures")
       end
     end
   end

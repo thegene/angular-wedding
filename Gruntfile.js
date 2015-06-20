@@ -342,8 +342,7 @@ module.exports = function (grunt) {
             '*.html',
             'views/{,*/}*.html',
             'images/{,*/}*.{webp}',
-            'fonts/*',
-            'pictures/pictures.json'
+            'fonts/*'
           ]
         }, {
           expand: true,
@@ -357,26 +356,17 @@ module.exports = function (grunt) {
           dest: '<%= yeoman.dist %>'
         }]
       },
+      dev: {
+        expand: true,
+        cwd: '<%= yeoman.app %>/dev_pictures',
+        dest: '<%= yeoman.dist %>/pictures',
+        src: '*'
+      },
       styles: {
         expand: true,
         cwd: '<%= yeoman.app %>/styles',
         dest: '.tmp/styles/',
         src: '{,*/}*.css'
-      },
-
-      developmentPictures: {
-        src: 'app/pictures/devPictures.json',
-        dest: 'app/pictures/pictures.json'
-      },
-
-      layoutPictures: {
-        src: 'app/pictures/devLayoutPictures.json',
-        dest: 'app/pictures/pictures.json'
-      },
-
-      productionPictures: {
-        src: 'app/pictures/prodPictures.json',
-        dest: 'app/pictures/pictures.json'
       }
     },
 
@@ -428,9 +418,6 @@ module.exports = function (grunt) {
 
   grunt.loadNpmTasks('grunt-protractor-runner');
 
-  var environment = grunt.option('environment') || 'development';
-  var copyPictureManifest = 'copy:' + environment + 'Pictures';
-
   grunt.registerTask('serve', 'Compile then start a connect web server', function (target) {
     if (target === 'dist') {
       return grunt.task.run(['build', 'connect:dist:keepalive']);
@@ -438,7 +425,6 @@ module.exports = function (grunt) {
 
     grunt.task.run([
       'clean:server',
-      copyPictureManifest,
       'wiredep',
       'concurrent:server',
       'autoprefixer',
@@ -447,7 +433,6 @@ module.exports = function (grunt) {
     ]);
   });
 
-
   grunt.registerTask('server', 'DEPRECATED TASK. Use the "serve" task instead', function (target) {
     grunt.log.warn('The `server` task has been deprecated. Use `grunt serve` to start a server.');
     grunt.task.run(['serve:' + target]);
@@ -455,7 +440,6 @@ module.exports = function (grunt) {
 
   grunt.registerTask('testPrep', [
     'clean:server',
-    copyPictureManifest,
     'concurrent:test',
     'autoprefixer',
     'connect:test'
@@ -487,7 +471,7 @@ module.exports = function (grunt) {
     'concat',
     'ngAnnotate',
     'copy:dist',
-    copyPictureManifest,
+    'copy:dev',
     'cdnify',
     'cssmin',
     'uglify',

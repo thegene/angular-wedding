@@ -10,7 +10,7 @@
 angular.module('angularWeddingApp')
   .controller('MainCtrl', function ($scope, $modal, $http) {
 
-    $http.get('pictures/pictures.json').success(function(data){
+    $http.get('pictures/manifest.json').success(function(data){
       $scope.pictures = data.pictures;
     });
 
