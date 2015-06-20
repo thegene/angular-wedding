@@ -87,6 +87,13 @@ module.exports = function (grunt) {
           }
         }
       },
+      e2e:{
+        options:{
+          port: 9001,
+          open: true,
+          base: '<%= yeoman.dist %>'
+        }
+      },
       test: {
         options: {
           port: 9001,
@@ -455,7 +462,8 @@ module.exports = function (grunt) {
   ]);
 
   grunt.registerTask('e2e', [
-    'testPrep',
+    'build:dist',
+    'connect:e2e',
     'protractor'
   ]);
 
