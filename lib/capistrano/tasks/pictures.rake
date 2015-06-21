@@ -29,16 +29,17 @@ namespace :pictures do
 
   task :delete_tmp do
     run_locally do
-      picture_bundle_tar.delete_tmp!
+      picture_bundle_tar.delete_local_tar!
     end
   end
 
   desc "Links to the pictures dir"
   task :link do
     on roles(:app) do
-      unless test("[ -L #{current_path}/pictures ]")
-        execute("ln -s #{shared_path}/pictures #{current_path}/pictures")
+      if test("[ -L #{current_path}/pictures ]")
+        execute("rm #{current_path}/pictures")
       end
+      execute("ln -s #{shared_path}/pictures #{current_path}/pictures")
     end
   end
 
