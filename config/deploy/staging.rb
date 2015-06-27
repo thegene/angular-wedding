@@ -17,6 +17,8 @@
 # Don't use `:all`, it's a meta role.
 
 role :app, 'deploy@192.168.100.100'
+set :deploy_to, '/var/www/apps/wedding.eugenewestbrook.dev'
+
 # role :web, %w{user1@primary.com user2@additional.com}, other_property: :other_value
 # role :db,  %w{deploy@example.com}
 
